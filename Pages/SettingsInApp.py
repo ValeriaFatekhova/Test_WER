@@ -1,16 +1,31 @@
+from selenium.webdriver.common.by import By
 from Pages.BasePage import BasePage
 
 
 class SettingsInApp(BasePage):
+    SETTINGS_BUTTON = (By.ID, "com.harman.enova.beta:id/settingsBtn")
+    SETTINGS_DEVICE = (By.ID, "com.harman.enova.beta:id/settings_device")
+    CURRENT_SERVER = (By.ID, "com.harman.enova.beta:id/serverName")
+    SETTINGS_BACK_BUTTON = (By.ID, "com.harman.enova.beta:id/backButton")
+    SETTINGS_COMMON = (By.ID, "com.harman.enova.beta:id/settings_common")
+
     def __init__(self, driver):
         super().__init__(driver)
 
-    def set_settings(self, settings):
+    def get_server(self):
+        self.do_click_by_locator(self.SETTINGS_BUTTON)
+        self.do_click_by_locator(self.SETTINGS_DEVICE)
+        server = self.find_element(self.CURRENT_SERVER)
+        self.return_to_customer_screen()
+        return server.text
 
-        self.click_android_button(button_name='Settings', button_id='com.harman.enova.beta:id/settingsBtn')
-        self.pause(2)
-        self.click_android_button(button_name='Common', button_id='com.harman.enova.beta:id/settings_common')
-        self.pause(2)
+    def return_to_customer_screen(self):
+        self.do_click_by_locator(self.SETTINGS_BACK_BUTTON)
+        self.do_click_by_locator(self.SETTINGS_BACK_BUTTON)
+
+    def set_settings(self, settings):
+        self.do_click_by_locator(self.SETTINGS_BUTTON)
+        self.do_click_by_locator(self.SETTINGS_COMMON)
 
         self.click_android_button(button_name='Pause Detection Timeout',
                                             button_id='com.harman.enova.beta:id/pauseDetectionTimeoutLayout')
@@ -43,8 +58,5 @@ class SettingsInApp(BasePage):
         self.pause(2)
         self.click_android_button(button_name='Russian', button_id='com.harman.enova.beta:id/languageName',
                                             button_text='Russian')
-        self.pause(2)
-        self.driver.back()
-        self.pause(2)
-        self.driver.back()
+        self.return_to_customer_screen()
 

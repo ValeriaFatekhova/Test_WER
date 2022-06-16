@@ -1,7 +1,10 @@
+from selenium.webdriver.common.by import By
+
 from Pages.BasePage import BasePage
 
 
 class ChooseCustomerScreen(BasePage):
+
     def __int__(self, driver):
         super.__init__(driver)
 

@@ -32,6 +32,10 @@ class BasePage:
         elements = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(locator))
         return elements
 
+    def find_element(self, locator):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
+        return element
+
     def pause(self, seconds):
         time.sleep(seconds)
 
