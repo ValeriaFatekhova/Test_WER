@@ -17,8 +17,17 @@ class BasePage:
     def do_click_by_element(self, element):
         element.click()
 
-    def do_send_keys(self, locator, text):
+    def do_send_keys_by_locator(self, locator, text):
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).send_keys(text)
+
+    def do_send_keys_by_element(self, element, text):
+        element.send_keys(text)
+
+    def clear_element_by_locator(self, locator):
+        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).clear()
+
+    def clear_element_by_element(self, element):
+        element.clear()
 
     def get_element_text(self, locator):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
@@ -35,6 +44,13 @@ class BasePage:
     def find_element(self, locator):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
         return element
+
+    def is_element_checked_by_locator(self, locator):
+        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
+        return element.get_attribute("checked")
+
+    def is_element_checked_by_element(self, element):
+        return element.get_attribute("checked")
 
     def pause(self, seconds):
         time.sleep(seconds)

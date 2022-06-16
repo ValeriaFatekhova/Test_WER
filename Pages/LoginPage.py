@@ -14,7 +14,7 @@ class LoginPage(BasePage):
         super().__init__(driver)
 
     def set_email(self, user_name):
-        self.do_send_keys(self.EMAIL, user_name)
+        self.do_send_keys_by_locator(self.EMAIL, user_name)
 
     def set_server(self, server_name):
         self.do_click_by_locator(self.SERVER)
