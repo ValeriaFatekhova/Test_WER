@@ -124,7 +124,7 @@ class LoginPage(BasePage):
         self.click_android_button(button_name='Common', button_id='com.harman.enova.beta:id/settings_device')
         self.pause(2)
         self.server = self.find_android_element(element_id='com.harman.enova.beta:id/serverName')
-        print(self.get_element_text(self.server))
+        print(self.server)
         # return self.server
 
     def find_email_edit_field(self, fill=None):
