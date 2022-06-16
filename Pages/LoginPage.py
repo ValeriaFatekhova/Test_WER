@@ -1,105 +1,40 @@
 import imaplib
 import re
 import email
+
+from selenium.webdriver.common.by import By
+
 from Pages.BasePage import BasePage
 
 
 class LoginPage(BasePage):
+    EMAIL = (By.ID, "com.harman.enova.beta:id/emailEditText")
+    SERVER = (By.ID, "com.harman.enova.beta:id/selectHostButton")
+    PROTOCOL = (By.ID, "com.harman.enova.beta:id/selectProtocolButton")
+    SEND_BUTTON = (By.ID, "com.harman.enova.beta:id/submitBtn")
+    SERVERS_LIST = (By.ID, "com.harman.enova.beta:id/serverName")
+
     def __init__(self, driver):
         super().__init__(driver)
 
-    def login(self, server_name, user_name):
-        edit_pin = None
-        data = self.find_android_element(element_id='emailEditText', timeout=15)
-        if len(data) == 1:
-            data[0].send_keys(user_name)
-        else:
-            data = self.find_android_element(element_id='parentPanel', timeout=5)
-            if len(data) == 1:
-                pop_up = data[0]
-                message_header = ''
-                data = self.find_android_element(element_id='topPanel', parent=pop_up)
-                if len(data) == 1:
-                    data = self.find_android_element(element_id='title_template', parent=data[0])
-                    if len(data) == 1:
-                        data = self.find_android_element(element_id='alertTitle', parent=data[0])
-                        if len(data) == 1:
-                            message_header = data[0].text
-                data = self.find_android_element(element_id='contentPanel', parent=pop_up)
-                if len(data) == 1:
-                    data = self.find_android_element(element_id='scrollView', parent=data[0])
-                    if len(data) == 1:
-                        data = self.find_android_element(class_name='android.widget.LinearLayout', parent=data[0])
-                        if len(data) == 1:
-                            message = data[0].find_element_by_class_name('android.widget.TextView')
-                            if message:
-                                self.log.log(f'PopUp Message: "{message_header}: {message.text}"')
-                self.driver.back()
-            self.find_email_edit_field(fill=user_name)
-        self.click_android_button(button_name='Host Name', button_id='selectHostButton')
-        self.check_android_element(element_id='selectHostLayout', timeout=5,
-                              err_msg='Server drop-down list is not available')
-        self.click_android_button(button_id='serverName',
-                             button_text=server_name,
-                             err_msg=f'Server {server_name} not in list')
-        # clean_pin_messages()
-        retries = 10
-        while retries:
-            retries -= 1
-            self.click_android_button(button_name='SUBMIT', button_id='submitBtn')
-            if len(self.find_android_element(element_id='continueButton', timeout=30)) == 1:
-                self.skip_settings()
-                return
-            data = self.find_android_element(element_id="pinInputEditText", timeout=5)
-            if len(data) == 1:
-                edit_pin = data[0]
+    def set_email(self, user_name):
+        self.do_send_keys(self.EMAIL, user_name)
+
+    def set_server(self, server_name):
+        self.do_click_by_locator(self.SERVER)
+        elements = self.find_elements(self.SERVERS_LIST)
+        for element in elements:
+            if element.text == server_name:
+                self.do_click_by_element(element)
                 break
-            else:
-                edit_pin = None
-            data = self.find_android_element(element_id='errorText', timeout=5)
-            if len(data) == 1:
-                self.log.log(f'Error Message: "{data[0].text}"')
-                self.pause(15)
-                continue
-            data = self.find_android_element(element_id='parentPanel', timeout=5)
-            if len(data) == 1:
-                pop_up = data[0]
-                message_header = ''
-                data = self.find_android_element(element_id='topPanel', parent=pop_up)
-                if len(data) == 1:
-                    data = self.find_android_element(element_id='title_template', parent=data[0])
-                    if len(data) == 1:
-                        data = self.find_android_element(element_id='alertTitle', parent=data[0])
-                        if len(data) == 1:
-                            message_header = data[0].text
-                data = self.find_android_element(element_id='contentPanel', parent=pop_up)
-                if len(data) == 1:
-                    data = self.find_android_element(element_id='scrollView', parent=data[0])
-                    if len(data) == 1:
-                        data = self.find_android_element(class_name='android.widget.LinearLayout', parent=data[0])
-                        if len(data) == 1:
-                            message = data[0].find_element_by_class_name('android.widget.TextView')
-                            if message:
-                                self.log.log(f'PopUp Message: "{message_header}: {message.text}"')
-                self.driver.back()
-                self.log.log('Click [Back]')
-                self.pause(30)
-                continue
-            break
-        self.log.log('Waiting for PIN...')
-        #pin = self.readPin(retries=10, timeout=30)
-        # if not pin:
-        #     raise Exception('PIN was not received')
-        # self.log.log('PIN received')
-        # if edit_pin is None:
-        #     data = self.find_android_element(element_id="pinInputEditText", timeout=5)
-        #     if len(data) == 1:
-        #         edit_pin = data[0]
-        #     else:
-        #         raise Exception('"Enter PIN" field is not present')
-        # edit_pin.send_keys(pin)
-        self.pause(5)
-        self.skip_settings()
+
+    def click_send_button(self):
+        self.do_click_by_locator(self.SEND_BUTTON)
+
+    def do_login(self, server_name, user_name):
+        self.set_email(user_name)
+        self.set_server(server_name)
+        self.click_send_button()
 
     def skip_settings(self):
         data = self.find_android_element(element_id='continueButton', timeout=5)

@@ -11,8 +11,11 @@ class BasePage:
         self.driver = driver
         self.log = Report()
 
-    def do_click(self, locator):
+    def do_click_by_locator(self, locator):
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).click()
+
+    def do_click_by_element(self, element):
+        element.click()
 
     def do_send_keys(self, locator, text):
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).send_keys(text)
@@ -24,6 +27,10 @@ class BasePage:
     def is_element(self, locator):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
         return bool(element)
+
+    def find_elements(self, locator):
+        elements = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(locator))
+        return elements
 
     def pause(self, seconds):
         time.sleep(seconds)

@@ -16,7 +16,7 @@ class TestWer(BaseTest):
     @pytest.mark.parametrize("login_data", [TestData.LOGIN_DATA])
     def test_login(self, login_data):
         self.login_page = LoginPage(self.driver)
-        self.login_page.login(login_data["SERVER"], login_data["USER_NAME"])
+        self.login_page.do_login(login_data["SERVER"], login_data["USER_NAME"])
         self.login_page.get_server()
 
     @pytest.mark.parametrize("customer, settings, audio_path, report_path", [
