@@ -1,0 +1,8 @@
+Command line:
+python punctuator_test.py --server "US West" --email TBD@gmail.com --password TBD --application C:\Users\ruineyiv\Documents\eNova\Script_Rus_STT_NLP\Punctuator\eNova_Beta_1.1.4.171.apk --device RF8N916282E
+
+audio folder contains audio files and corresponding.txt reference files
+
+reports folder contains reports in .xlsx files
+
+report_template.xlsx file should not be edited or deleted
