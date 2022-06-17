@@ -17,7 +17,7 @@ class TestWer(BaseTest):
     def test_login(self, login_data):
         self.login_page = LoginPage(self.driver)
         self.login_page.login(login_data["SERVER"], login_data["USER_NAME"])
-        self.login_page.get_server()
+        #self.login_page.get_server()
 
     @pytest.mark.parametrize("customer, settings, audio_path, report_path", [
         (TestData.CUSTOMER, TestData.SETTINGS_DATA, TestData.AUDIO_PATH, TestData.REPORT_PATH)
@@ -30,7 +30,7 @@ class TestWer(BaseTest):
         self.log = Report()
         self.a = Audio()
 
-        self.settings_page.set_settings(settings)
+        self.settings_page.set_settings_for_wer_test(settings["pauseDetectionTimeoutLayout"])
         self.main_screen.selectCustomer(customer)
 
         for audio in os.listdir(audio_path):

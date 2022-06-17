@@ -64,3 +64,6 @@ class SettingsInApp(BasePage):
                 self.do_click_by_element(element)
                 break
         self.return_to_customer_screen()
+
+    def set_settings_for_wer_test(self, pauseDetectionTimeoutLayout):
+        self.set_common_pause_timeout(pauseDetectionTimeoutLayout)
