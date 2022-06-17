@@ -20,7 +20,7 @@ class LoginPage(BasePage):
         self.do_click_by_locator(self.SERVER)
         elements = self.find_elements(self.SERVERS_LIST)
         for element in elements:
-            if element.text == server_name:
+            if self.get_element_text_by_element(element) == server_name:
                 self.do_click_by_element(element)
                 break
 

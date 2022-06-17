@@ -3,10 +3,17 @@ from Pages.BasePage import BasePage
 
 
 class ChooseCustomerScreen(BasePage):
+    CURRENT_CUSTOMER = (By.ID, "com.harman.enova.beta:id/titleTextView")
 
     def __int__(self, driver):
         super.__init__(driver)
 
+    def check_current_customer(self):
+        current_customer = self.find_element(self.CURRENT_CUSTOMER)
+        return self.get_element_text_by_element(current_customer)
+
+    def select_customer(self, customer):
+        pass
 
     def selectCustomer(self, customer):
         data = self.find_android_element(element_id='chooseModeTextView', text='Выберите клиента')

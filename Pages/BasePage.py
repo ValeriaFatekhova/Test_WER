@@ -29,8 +29,11 @@ class BasePage:
     def clear_element_by_element(self, element):
         element.clear()
 
-    def get_element_text(self, locator):
+    def get_element_text_by_locator(self, locator):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
+        return element.text
+
+    def get_element_text_by_element(self, element):
         return element.text
 
     def is_element(self, locator):

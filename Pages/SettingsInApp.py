@@ -25,7 +25,7 @@ class SettingsInApp(BasePage):
         self.do_click_by_locator(self.SETTINGS_DEVICE)
         server = self.find_element(self.CURRENT_SERVER)
         self.return_to_customer_screen()
-        return server.text
+        return self.get_element_text_by_element(server)
 
     def return_to_customer_screen(self):
         self.do_click_by_locator(self.SETTINGS_BACK_BUTTON)
@@ -55,12 +55,12 @@ class SettingsInApp(BasePage):
             self.do_click_by_element(switch_default_language)
         customers = self.find_elements(self.CUSTOMERS_LIST)
         for element in customers:
-            if element.text == customer:
+            if self.get_element_text_by_element(element) == customer:
                 self.do_click_by_element(element)
                 break
         languages = self.find_elements(self.LANGUAGES_LIST)
         for element in languages:
-            if element.text == language:
+            if self.get_element_text_by_element(element) == language:
                 self.do_click_by_element(element)
                 break
         self.return_to_customer_screen()
