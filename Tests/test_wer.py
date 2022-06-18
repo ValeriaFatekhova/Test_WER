@@ -31,7 +31,7 @@ class TestWer(BaseTest):
         self.a = Audio()
 
         self.settings_page.set_settings_for_wer_test(settings["pauseDetectionTimeoutLayout"])
-        self.main_screen.selectCustomer(customer)
+        self.main_screen.open_chatmode_for_customer(customer)
 
         for audio in os.listdir(audio_path):
             if self.a.get_file_extension(audio) not in ('.wav', '.aac'):

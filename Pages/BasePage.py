@@ -36,7 +36,7 @@ class BasePage:
     def get_element_text_by_element(self, element):
         return element.text
 
-    def is_element(self, locator):
+    def is_element_by_locator(self, locator):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
         return bool(element)
 
@@ -54,6 +54,16 @@ class BasePage:
 
     def is_element_checked_by_element(self, element):
         return element.get_attribute("checked")
+
+    def swipe_left_by_element(self, element):
+        x = element.location['x'] + element.size['width'] / 2
+        y = element.location['y'] + element.size['height'] / 2
+        self.driver.swipe(x, y, 35, y, 200)
+
+    def swipe_right_by_element(self, element):
+        x = element.location['x'] + element.size['width'] / 2
+        y = element.location['y'] + element.size['height'] / 2
+        self.driver.swipe(0, y, x, y, 200)
 
     def pause(self, seconds):
         time.sleep(seconds)

@@ -1,14 +1,7 @@
 import openpyxl
-import time
 import pytest
 from appium import webdriver
 from Config.config import TestData
-import subprocess
-from Pages.BasePage import BasePage
-from Pages.LoginPage import LoginPage
-from Pages.ChooseCustomersScreen import ChooseCustomerScreen
-from Logs.Logs import Report
-from AudioData.CheckAudio import Audio
 
 
 @pytest.fixture(scope='class')
