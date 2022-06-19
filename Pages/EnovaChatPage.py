@@ -49,9 +49,8 @@ class EnovaChatPage(BasePage):
         self.log.log(f'Recording stopped')
 
     def play_audio_in_chat(self, audio):
-        self.click_android_button(button_name='Record', button_id='recordBtn')
-        self.recording_start()
+        #self.recording_start()
         self.a.play(audio)
-        self.recording_stop(timeout=60)
+        #self.recording_stop(timeout=60)
         self.pause(2)
         return self.find_android_element(element_id='com.harman.enova.beta:id/requestTextView')

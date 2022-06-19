@@ -32,6 +32,7 @@ class TestWer(BaseTest):
 
         self.settings_page.set_settings_for_wer_test(settings["pauseDetectionTimeoutLayout"])
         self.main_screen.open_chatmode_for_customer(customer)
+        self.enova_chat_page.listening_mode_on()
 
         for audio in os.listdir(audio_path):
             if self.a.get_file_extension(audio) not in ('.wav', '.aac'):

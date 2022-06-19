@@ -503,3 +503,29 @@ def test_change_settings(self):
     self.driver.back()
     self.base_page.pause(2)
     self.driver.back()
+
+    def selectNextCustomer(self):
+        data = self.find_android_element(element_id='titleTextView', timeout=5)
+        if len(data) != 1:
+            raise Exception('Customer name not found')
+        prev_title = self.find_customer_name()
+        x = data[0].location['x'] + data[0].size['width'] / 2
+        y = data[0].location['y'] + data[0].size['height'] / 2
+        self.driver.swipe(x, y, 35, y, 200)
+        self.pause(1)
+        title = self.find_customer_name()
+        self.log.log(f'Next Customer: {title}')
+        return title != prev_title
+
+    def selectPrevCustomer(self):
+        data = self.find_android_element(element_id='titleTextView', timeout=5)
+        if len(data) != 1:
+            raise Exception('Customer name not found')
+        prev_title = self.find_customer_name()
+        x = data[0].location['x'] + data[0].size['width'] / 2
+        y = data[0].location['y'] + data[0].size['height'] / 2
+        self.driver.swipe(0, y, x, y, 200)
+        self.pause(1)
+        title = self.find_customer_name()
+        self.log.log(f'Prev Customer: {title}')
+        return title != prev_title
