@@ -43,7 +43,7 @@ class TestWer(BaseTest):
                 continue
             with open(expected_path, 'r', encoding='utf-8') as f:
                 expected_text = f.read()
-            actual_text = self.enova_chat_page.play_audio_in_chat(audio)
+            actual_text = self.enova_chat_page.play_audio_in_chat(os.path.join(audio_path, audio))
             if not self.actual_text:
                 self.log.log(f'No response. Audio "{audio}" ignored')
                 continue

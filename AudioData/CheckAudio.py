@@ -10,11 +10,8 @@ class Audio:
     def __init__(self):
         self.log = Report()
 
-    def play(self, audio):
-        if audio:
-            playsound(audio)
-        else:
-            raise Exception('Empty audio in "voice" interaction mode')
+    def play(self, audio_path):
+            playsound(audio_path)
 
     def wer(self, r, h):
         if not r:
