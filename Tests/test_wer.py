@@ -22,7 +22,6 @@ class TestWer(BaseTest):
         self.login_page.login(login_data["SERVER"], login_data["USER_NAME"])
 
         server_name = self.settings.get_server()
-        print(server_name)
         assert server_name == login_data["SERVER"]
         flag = self.base_page.is_element_by_locator(self.customers_page.CUSTOMER_CARD)
         assert flag

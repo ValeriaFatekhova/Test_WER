@@ -25,8 +25,10 @@ class SettingsInApp(BasePage):
         self.do_click_by_locator(self.SETTINGS_BUTTON)
         self.do_click_by_locator(self.SETTINGS_DEVICE)
         server = self.find_element(self.CURRENT_SERVER)
+        server_name = self.get_element_text_by_element(server).split(":")
+        print(server_name)
         self.return_to_customer_screen()
-        return self.get_element_text_by_element(server)
+        return server_name[0]
 
     def return_to_customer_screen(self):
         self.do_click_by_locator(self.SETTINGS_BACK_BUTTON)
