@@ -12,6 +12,7 @@ class SettingsInApp(BasePage):
     TIMEOUT_FIELD = (By.ID, "com.harman.enova.beta:id/inputField")
     TIMEOUT_SAVE_BUTTON = (By.ID, "android:id/button1")
     AUDIOSTREAMING_SWITCH = (By.ID, "com.harman.enova.beta:id/audioStreamingSwitch")
+    TRANSCRIBE_MODE_SWITCH = (By.ID, "com.harman.enova.beta:id/transcribeModeSwitch")
     SETTINGS_LANGUAGE = (By.ID, "com.harman.enova.beta:id/settings_language")
     SWITCH_DEFAULT_LANGUAGE = (By.ID, "com.harman.enova.beta:id/switchDefaultLanguage")
     CUSTOMERS_LIST = (By.ID, "com.harman.enova.beta:id/customerName")
@@ -47,6 +48,12 @@ class SettingsInApp(BasePage):
         self.do_click_by_locator(self.AUDIOSTREAMING_SWITCH)
         self.return_to_customer_screen()
 
+    def set_common_transcribe_turnon(self):
+        self.do_click_by_locator(self.SETTINGS_BUTTON)
+        self.do_click_by_locator(self.SETTINGS_COMMON)
+        self.do_click_by_locator(self.TRANSCRIBE_MODE_SWITCH)
+        self.return_to_customer_screen()
+
     def change_language(self, customer, language):
         self.do_click_by_locator(self.SETTINGS_BUTTON)
         self.do_click_by_locator(self.SETTINGS_LANGUAGE)
@@ -67,3 +74,4 @@ class SettingsInApp(BasePage):
 
     def set_settings_for_wer_test(self, pauseDetectionTimeoutLayout):
         self.set_common_pause_timeout(pauseDetectionTimeoutLayout)
+        self.set_common_transcribe_turnon()

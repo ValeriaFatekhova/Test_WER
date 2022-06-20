@@ -16,8 +16,16 @@ class TestWer(BaseTest):
     @pytest.mark.parametrize("login_data", [TestData.LOGIN_DATA])
     def test_login(self, login_data):
         self.login_page = LoginPage(self.driver)
+        self.settings = SettingsInApp(self.driver)
+        self.customers_page = ChooseCustomerScreen(self.driver)
+
         self.login_page.login(login_data["SERVER"], login_data["USER_NAME"])
-        #self.login_page.get_server()
+
+        server_name = self.settings.get_server()
+        print(server_name)
+        assert server_name == login_data["SERVER"]
+        flag = self.base_page.is_element_by_locator(self.customers_page.CUSTOMER_CARD)
+        assert flag
 
     @pytest.mark.parametrize("customer, settings, audio_path, report_path", [
         (TestData.CUSTOMER, TestData.SETTINGS_DATA, TestData.AUDIO_PATH, TestData.REPORT_PATH)
@@ -44,7 +52,7 @@ class TestWer(BaseTest):
             with open(expected_path, 'r', encoding='utf-8') as f:
                 expected_text = f.read()
             actual_text = self.enova_chat_page.play_audio_in_chat(os.path.join(audio_path, audio))
-            if not self.actual_text:
+            if not actual_text:
                 self.log.log(f'No response. Audio "{audio}" ignored')
                 continue
             else:
