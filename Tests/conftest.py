@@ -2,6 +2,10 @@ import openpyxl
 import pytest
 from appium import webdriver
 from Config.config import TestData
+from Pages.BasePage import BasePage
+from Pages.ChooseCustomersScreen import ChooseCustomerScreen
+from Pages.LoginPage import LoginPage
+from Pages.SettingsInApp import SettingsInApp
 
 
 @pytest.fixture(scope='class')
@@ -28,3 +32,14 @@ def init_driver(request):
     yield
     driver.close_app()
     driver.quit()
+
+
+# @pytest.fixture(scope='function')
+# def preparation_for_wer_test():
+#     main_screen = ChooseCustomerScreen(driver)
+#     settings_page = SettingsInApp(driver)
+#     login_page = LoginPage(driver)
+#
+#     login_page.login(login_data["SERVER"], login_data["USER_NAME"])
+#     settings_page.set_settings_for_wer_test(settings["pauseDetectionTimeoutLayout"])
+#     main_screen.open_chatmode_for_customer(customer)
